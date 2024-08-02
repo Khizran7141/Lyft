@@ -26,23 +26,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Message = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const MessageSchema = new mongoose_1.Schema({
-    sender_id: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
+    token: {
+        type: mongoose_1.default.Types.ObjectId,
         ref: 'User',
-        required: true,
+        required: true
     },
-    receiver_id: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
+    user: {
+        type: mongoose_1.default.Types.ObjectId,
         ref: 'User',
-        required: true,
+        required: true
     },
-    content: {
+    device: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
+    },
+    type: {
         type: String,
         required: true,
+        default: 'message'
     },
     timestamp: {
         type: Date,
-        default: Date.now,
-    },
+        default: Date.now
+    }
 });
 exports.Message = mongoose_1.default.model('Message', MessageSchema);

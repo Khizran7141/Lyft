@@ -23,23 +23,30 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Channel = void 0;
-// src/models/Channel.ts
+exports.Group = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const ChannelSchema = new mongoose_1.Schema({
-    groupId: {
-        type: mongoose_1.default.Types.ObjectId,
-        ref: "Group",
+const GroupSchema = new mongoose_1.Schema({
+    status: {
+        type: Number,
+        required: true,
+        default: 1
     },
-    members: [
-        {
-            type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
+    token: {
+        type: mongoose_1.default.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    users: [{
+            type: mongoose_1.default.Types.ObjectId,
+            ref: 'User',
+        }],
     messages: [{
-            type: mongoose_1.default.Schema.Types.ObjectId,
+            type: mongoose_1.default.Types.ObjectId,
             ref: 'Message'
         }]
 });
-exports.Channel = mongoose_1.default.model('Channel', ChannelSchema);
+exports.Group = mongoose_1.default.model('Group', GroupSchema);

@@ -5,6 +5,7 @@ export interface IGroup extends Document {
   token: mongoose.Types.ObjectId;
   name: string;
   users: mongoose.Types.ObjectId[];
+  messages: mongoose.Types.ObjectId[];
 }
 
 const GroupSchema: Schema = new Schema({
@@ -21,11 +22,16 @@ const GroupSchema: Schema = new Schema({
   name: {
     type: String,
     required: true,
+    default: 'individual'
   },
   users: [{
     type: mongoose.Types.ObjectId,
     ref: 'User',
   }],
+  messages: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'Message'
+  }]
 });
 
 export const Group = mongoose.model<IGroup>('Group', GroupSchema);

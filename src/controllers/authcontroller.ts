@@ -8,7 +8,7 @@ dotenv.config();
 
 const generateToken = (id: string) => {
   return jwt.sign({ id }, process.env.JWT_SECRET as string, {
-    expiresIn: '1h',
+    expiresIn: '30d',
   });
 };
 
@@ -22,8 +22,8 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     if (user.password !== password) {
-        return res.status(401).json({ message: 'Invalid credentials', status: false });
-      }
+      return res.status(401).json({ message: 'Invalid credentials', status: false });
+    }
 
     const token = generateToken(user.id);
     res.json({ token });

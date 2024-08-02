@@ -4,12 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const groupController_1 = require("../controllers/groupController");
 const authenticate_1 = require("../middleware/authenticate");
-const messageController_1 = require("../controllers/messageController");
 const router = express_1.default.Router();
 router.use(authenticate_1.authenticate);
-router.post('/send/:receiver_id', messageController_1.sendMessage);
-router.get('/receive/:receiver_id', messageController_1.getMessages);
-router.post('/groups/:groupId/messages', messageController_1.sendMessageToGroup);
-router.get('/groups/:groupId/messages', messageController_1.getGroupMessages);
+router.post('/groups', groupController_1.createGroup);
+router.get('/getgroups', groupController_1.getGroups);
+router.get('/groups/:id', groupController_1.getGroupById);
+router.post('/groups/:groupId/add-user/:userId', groupController_1.addUserToGroup);
 exports.default = router;

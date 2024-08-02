@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import { Group, IGroup } from '../models/group';
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 import { AuthenticatedRequest } from '../middleware/authenticate';
-import { User } from 'src/models/Users';
+import { User } from '../models/Users';
 
 export const createGroup = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const token = req.user?._id;
     const { name, users } = req.body;
 
-    const group: IGroup = await Group.create({ token, name, users });
+    const group: IGroup = await Group.create({ token, name, users: [token, users] });
 
     res.status(201).json({ message: 'Group created successfully', data: group });
   } catch (error) {
@@ -78,9 +78,8 @@ export const getGroups = async (req: AuthenticatedRequest, res: Response) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         // Add the user to the group
-        group.users.push(user._id);
+        group.users.push(user._id as mongoose.Types.ObjectId);
         await group.save();
 
         res.status(200).json({ message: 'User added to the group successfully', group });
@@ -89,3 +88,26 @@ export const getGroups = async (req: AuthenticatedRequest, res: Response) => {
         res.status(500).json({ message: 'Server Error' });
     }
 };
+
+
+export const removeUserFromGroup = async (req: Request, res: Response) => {
+    try {
+      const { groupId, userId } = req.params;
+  
+      const group = await Group.findById(groupId);
+      if (!group) {
+        return res.status(404).json({ message: 'Group not found' });
+      }
+  
+      group.users = group.users.filter(user => user._id.toString() !== userId);
+
+
+      await Promise.all([group.save()])
+  
+      res.json({ message: 'User removed from group successfully', group });
+  
+    } catch (error) {
+      console.error('Error removing user from group:', error);
+      res.status(500).json({ message: 'Error removing user from group', error });
+    }
+  };

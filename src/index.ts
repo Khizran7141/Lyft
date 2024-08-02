@@ -19,11 +19,6 @@ app.use('/api/auth', authRoutes);
 app.use('/message', messageRoutes);
 app.use('/api', groupRoutes)
 
-const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
 // Setup basic socket.io event listeners
 io.on('connection', (socket: Socket) => {
   console.log('A user connected: ', socket.id);
@@ -34,6 +29,16 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg);
-    io.emit('chat message', msg);
+    io.emit('new message', msg);
   });
+
+  socket.on('join', (userId) => {
+    socket.join(userId);
+    console.log(`User with ID: ${userId} joined room: ${userId}`);
+  });
+});
+
+const PORT = process.env.PORT || 8000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

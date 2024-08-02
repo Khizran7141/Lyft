@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import { IUser, User } from '../models/Users';
 
 export interface AuthenticatedRequest extends Request {
-    user?: IUser;
-  }
+  user?: IUser;
+}
 export const authenticate = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
 
   const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -24,6 +24,7 @@ export const authenticate = async (req: AuthenticatedRequest, res: Response, nex
     req.user = user;
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).json({ message: 'Unauthorized' });
   }
 };
