@@ -6,13 +6,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src",
-    "typeRoots": ["./node_modules/@types", "./types"],
+    "rootDir": ".",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "baseUrl": "./",
     "paths": {
       "*": ["types/*"]
     },
   },
-  "include": ["./src/**/*.ts", "./types/**/*.ts"],
+  "include": ["./src/**/*.ts", "./src/types/**/*.ts", "./functions/**/*.ts"],
   "exclude": ["node_modules"]
 }
