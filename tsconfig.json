@@ -13,6 +13,6 @@
       "*": ["types/*"]
     },
   },
-  "include": ["./src/**/*.ts", "./src/types/**/*.ts", "./functions/**/*.ts"],
+  "include": ["./src/**/*.ts", "./src/types/**/*.ts", "netlify/**/*.ts"],
   "exclude": ["node_modules"]
 }

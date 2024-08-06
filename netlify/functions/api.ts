@@ -1,5 +1,5 @@
 // functions/api/index.ts
-import express from 'express';
+import express, { Router } from 'express';
 import connectDB from '../../src/config/db';
 import authRoutes from '../../src/routes/authRoutes';
 import messageRoutes from '../../src/routes/messageRoutes';
@@ -17,9 +17,13 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+const router = Router();
+router.get("/hello", (req, res) => res.send("Hello World!"));
+
 app.use('/api/auth', authRoutes);
 app.use('/message', messageRoutes);
 app.use('/api', groupRoutes);
+app.use('/api', router);
 
 io.on('connection', (socket: Socket) => {
     console.log('A user connected: ', socket.id);

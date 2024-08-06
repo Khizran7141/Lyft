@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(authenticate);
 
 router.post('/send/:receiver_id', sendMessage);
-router.get('/receive/:receiver_id',  getMessages)
+router.get('/receive/:receiver_id', getMessages)
 router.post('/groups/:groupId/messages', sendMessageToGroup);
 router.get('/groups/:groupId/messages', getGroupMessages);
 
