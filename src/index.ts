@@ -19,7 +19,6 @@ app.use('/api/auth', authRoutes);
 app.use('/message', messageRoutes);
 app.use('/api', groupRoutes)
 
-// Setup basic socket.io event listeners
 io.on('connection', (socket: Socket) => {
   console.log('A user connected: ', socket.id);
 
@@ -29,13 +28,13 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('message', (msg) => {
     const parsedMessage = JSON.parse(msg);
-    console.log('message:', parsedMessage);
+    // console.log('message:', parsedMessage);
     io.emit('message', parsedMessage);
   });
 
   socket.on('join', (userId) => {
     socket.join(userId);
-    console.log(`User with ID: ${userId} joined room: ${userId}`);
+    // console.log(`User with ID: ${userId} joined room: ${userId}`);
   });
 });
 
