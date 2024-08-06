@@ -27,9 +27,10 @@ io.on('connection', (socket: Socket) => {
     console.log('A user disconnected: ', socket.id);
   });
 
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('new message', msg);
+  socket.on('message', (msg) => {
+    const parsedMessage = JSON.parse(msg);
+    console.log('message:', parsedMessage);
+    io.emit('message', parsedMessage);
   });
 
   socket.on('join', (userId) => {

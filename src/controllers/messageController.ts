@@ -44,7 +44,7 @@ export const sendMessage = async (req: AuthenticatedRequest, res: Response) => {
     }
     await Promise.all([group.save(), newMessage.save()]);
 
-    io.to(user).emit('new message', newMessage);
+    io.to(user).emit('message', newMessage);
 
     res.status(201).json({ message: 'Message sent successfully', data: newMessage });
   } catch (error) {
