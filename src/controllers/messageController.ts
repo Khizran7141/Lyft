@@ -44,11 +44,11 @@ export const sendMessage = async (req: AuthenticatedRequest, res: Response) => {
     }
     await Promise.all([group.save(), newMessage.save()]);
 
-    io.to(user).emit('message', newMessage);
+    io.to(user).emit('new message', newMessage);
 
     res.status(201).json({ message: 'Message sent successfully', data: newMessage });
   } catch (error) {
-    // console.log("error", error);
+    console.log("error", error);
     res.status(500).json({ message: 'Error sending message', error });
   }
 };
